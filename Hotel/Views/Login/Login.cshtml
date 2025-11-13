@@ -1,0 +1,60 @@
+﻿@model Hotel.ViewModels.LoginVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Hotel Gol</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Bienvenido a Hotel Gol</h4>
+                        <p>Inicia sesión para continuar</p>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Login" method="post" asp-controller="Login">
+                            <div class="form-group mb-4">
+                                <label for="usuario" class="form-label">Usuario</label>
+                                <input asp-for="usuario" id="usuario" class="form-control" placeholder="Ingresa tu usuario" type="text" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="clave" class="form-label">Contraseña</label>
+                                <input asp-for="clave" id="clave" class="form-control" placeholder="Ingresa tu contraseña" type="password" required>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-block">Iniciar Sesión</button>
+                            </div>
+                        </form>
+                        @if (ViewData["Mensaje"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewData["Mensaje"]
+                            </div>
+                        }
+                        <div class="mt-4 text-center">
+                            <p class="text-muted">Si olvidaste tu contraseña, Contacta al administrador</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3 footer-text">
+                    <p>&copy; @DateTime.Now.Year Hotel Gol. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

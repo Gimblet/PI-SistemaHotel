@@ -1,0 +1,140 @@
+﻿@model Hotel.ViewModels.AccesoFrontEnd
+
+@{
+    ViewData["Title"] = "Registrar Nuevo Empleado";
+}
+<div class="container my-5 p-4 bg-light border rounded shadow">
+    <h2 class="text-center text-primary">Registrar Nuevo Empleado</h2>
+    <form asp-action="Create" method="post" class="mt-4">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="hidden" asp-for="idCli" />
+                <div class="form-floating">
+                    <input type="text" class="form-control" asp-for="nombre" placeholder="Nombre">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" asp-for="apellido" placeholder="Apellido">
+                    <label for="apellido">Apellido</label>
+                </div>
+                <span asp-validation-for="apellido" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="form-floating">
+                    <select asp-for="tipoId" asp-items="ViewBag.tipoDoc" class="form-select">
+                        <option>Seleccionar</option>
+                    </select>
+                    <label for="tipoId">Tipo de Documento</label>
+                </div>
+                <span asp-validation-for="tipoId" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input type="text" class="form-control" asp-for="numeroDoc" placeholder="Número de Documento">
+                    <label for="numeroDoc">N° Documento</label>
+                </div>
+                <span asp-validation-for="numeroDoc" class="text-danger"></span>
+            </div>
+            <div class="col-md-5">
+                <div class="form-floating">
+                    <input type="text" class="form-control" asp-for="telefono" placeholder="Teléfono">
+                    <label for="telefono">Teléfono</label>
+                </div>
+                <span asp-validation-for="telefono" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button type="button" id="btnBuscarCliente" class="btn btn-info w-100" disabled>Buscar Cliente</button>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select asp-for="tipoUsuario" asp-items="ViewBag.tipoUser" class="form-select">
+                        <option>Seleccionar</option>
+                    </select>
+                    <label for="tipoUsuario">Tipo de Usuario</label>
+                </div>
+                <span asp-validation-for="tipoUsuario" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" asp-for="usuario" placeholder="Nombre de Usuario">
+                    <label for="usuario">Nombre de Usuario</label>
+                </div>
+                <span asp-validation-for="usuario" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="password" class="form-control" asp-for="clave" placeholder="Contraseña">
+                    <label for="clave">Contraseña</label>
+                </div>
+                <span asp-validation-for="clave" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="password" class="form-control" asp-for="repetirClave" placeholder="Repetir Contraseña">
+                    <label for="repetirClave">Repetir Contraseña</label>
+                </div>
+                <span asp-validation-for="repetirClave" class="text-danger"></span>
+            </div>
+        </div>
+        <input type="hidden" asp-for="id">
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Registrar Empleado</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+    <br>
+    @if (ViewData["Mensaje"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["Mensaje"]
+        </div>
+    }
+</div>
+
+
+<script>
+    const numeroDocInput = document.querySelector("input[name='numeroDoc']");
+    const btnBuscarCliente = document.getElementById("btnBuscarCliente");
+
+    numeroDocInput.addEventListener("input", () => {
+        btnBuscarCliente.disabled = numeroDocInput.value.trim() === "";
+    });
+
+    btnBuscarCliente.addEventListener("click", async () => {
+        const numeroDoc = numeroDocInput.value.trim();
+
+        if (!numeroDoc) {
+            alert("Por favor ingrese un número de documento.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/Acceso/BuscarCliente?numeroDoc=${numeroDoc}`);
+            const result = await response.json();
+
+            if (result.success) {
+                const cliente = result.cliente;
+                document.querySelector("input[name='idCli']").value = cliente.id;
+                document.querySelector("input[name='nombre']").value = cliente.nombre;
+                document.querySelector("input[name='apellido']").value = cliente.apellido;
+                document.querySelector("select[name='tipoId']").value = cliente.tipoId;
+                document.querySelector("input[name='telefono']").value = cliente.telefono;
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            alert(`Error al buscar el cliente: ${error.message}`);
+            alert("Ocurrió un error al buscar el cliente.");
+        }
+    });
+
+</script>

@@ -1,0 +1,39 @@
+﻿@model Hotel.Models.Acceso
+
+
+@{
+    ViewData["Title"] = "Eliminar Acceso";
+}
+
+<div class="container my-4">
+    <h1 class="text-center text-danger mb-4">Eliminar Acceso</h1>
+
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">¿Estás seguro de que deseas eliminar este acceso?</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3 text-secondary">Usuario</dt>
+                <dd class="col-sm-9">
+                    <span class="fw-bold">@(Model.usuario)</span>
+                </dd>
+                <dt class="col-sm-3 text-secondary">Tipo de Usuario</dt>
+                <dd class="col-sm-9">
+                    <span class="fw-bold">@(Model.tipoUsuario == "ADMIN" ? "Administrador" : "Empleado")</span>
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <form asp-action="Delete" class="d-inline">
+                <input type="hidden" asp-for="id" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Eliminar
+                </button>
+            </form>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</div>

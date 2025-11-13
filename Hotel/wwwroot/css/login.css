@@ -1,0 +1,48 @@
+﻿body {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background: #2575fc;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+    .card-header h4 {
+        margin: 0;
+        font-weight: bold;
+    }
+
+.btn-success {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    border: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #38f9d7, #43e97b);
+    }
+
+.alert-danger {
+    margin-top: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.footer-text {
+    color: white;
+    font-size: 0.9rem;
+}

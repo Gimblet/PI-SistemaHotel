@@ -1,0 +1,109 @@
+﻿@model Hotel.ViewModels.AccesoFrontEnd
+
+@{
+    ViewData["Title"] = "Modificar Empleado";
+}
+<div class="container my-4">
+    <h1 class="text-center text-warning mb-4">Modificar Empleado</h1>
+
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-warning text-white">
+            <h4 class="mb-0">Actualiza los datos del empleado</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="idCli" />
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" asp-for="nombre" readonly />
+                            <label for="nombre">Nombre</label>
+                            <span asp-validation-for="nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" asp-for="apellido" readonly />
+                            <label for="apellido">Apellido</label>
+                            <span asp-validation-for="apellido" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <select asp-for="tipoId" asp-items="ViewBag.tipoDoc" class="form-select" disabled></select>
+                            <label for="tipoId">Tipo de Documento</label>
+                            <span asp-validation-for="tipoId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" asp-for="numeroDoc" readonly />
+                            <label for="numeroDoc">N° Documento</label>
+                            <span asp-validation-for="numeroDoc" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" asp-for="telefono" readonly />
+                            <label for="telefono">Teléfono</label>
+                            <span asp-validation-for="telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select asp-for="tipoUsuario" asp-items="ViewBag.tipoUser" class="form-select">
+                                <option>Seleccionar</option>
+                            </select>
+                            <label for="tipoUsuario">Tipo de Usuario</label>
+                            <span asp-validation-for="tipoUsuario" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" asp-for="usuario" />
+                            <label for="usuario">Nombre de Usuario</label>
+                            <span asp-validation-for="usuario" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" asp-for="clave" />
+                            <label for="clave">Contraseña</label>
+                            <span asp-validation-for="clave" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" asp-for="repetirClave" />
+                            <label for="repetirClave">Repetir Contraseña</label>
+                            <span asp-validation-for="repetirClave" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="id" />
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="bi bi-pencil-square"></i> Modificar Empleado
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+        @if (ViewData["Mensaje"] != null)
+        {
+            <div class="card-footer">
+                <div class="alert alert-danger mb-0" role="alert">
+                    @ViewData["Mensaje"]
+                </div>
+            </div>
+        }
+    </div>
+</div>

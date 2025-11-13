@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Hotel.ViewModels.ListaAlquilerFrontEnd>
+
+@{
+    ViewData["Title"] = "Lista Alquiler";
+    decimal total = 0;
+    string color()
+    {
+        if (total >= 2000)
+        {
+            return "table-success";
+        }
+        else if (total <= 500)
+        {
+            return "table-danger";
+        }
+        else
+        {
+            return "table-warning";
+        }
+    }
+}
+<br />
+<h1>Listado de Alquiler</h1>
+
+<form method="get" action="@Url.Action("Index")">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="fecha1">Desde</label>
+            <input type="date" id="fecha1" name="fecha1" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label for="fecha2">Hasta</label>
+            <input type="date" id="fecha2" name="fecha2" class="form-control" />
+        </div>
+        <div class="col-md-4 align-self-end">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Habitación</th>
+            <th>Cliente</th>
+            <th>N° Documento</th>
+            <th>Días</th>
+            <th>Precio</th>
+            <th>Fecha Entrada</th>
+            <th>Fecha Salida</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var alquiler in Model)
+        {
+            <tr>
+                <td>@alquiler.numHab</td>
+                <td>@alquiler.nombre</td>
+                <td>@alquiler.documento</td>
+                <td>@alquiler.dias</td>
+                <td>@alquiler.precio.ToString("C")</td>
+                <td>@alquiler.fechaEntrada?.ToString("dd/MM/yyyy")</td>
+                <td>@alquiler.fechaSalida?.ToString("dd/MM/yyyy")</td>
+                <td>@alquiler.total.ToString("C")</td>
+            </tr>
+            total += alquiler.total;
+        }
+            <tr class="@color()">
+                <td colspan="7">Sumatoria total</td>
+                <td>@total.ToString("c")</td>
+            </tr>
+    </tbody>
+</table>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}

@@ -1,0 +1,197 @@
+﻿@model Hotel.ViewModels.AlquilerFrontEnd
+
+@{
+    ViewData["Title"] = "Registrar Alquiler";
+}
+<br />
+<form asp-action="RegistrarAlquiler" method="post">
+    <h4>Detalles de la Habitación</h4>
+    <div class="row align-items-center">
+        <div class="col-md-8 border-end">
+            <div class="row mb-3">
+                <input type="hidden" asp-for="HabitacionId" />
+                <div class="col-md-4">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <input type="text" class="form-control" value="@Model.Numero" asp-for="Numero" disabled />
+                        <label>Número de Habitación</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <input type="text" class="form-control" value="@Model.TipoHabitacion" asp-for="TipoHabitacion" disabled />
+                        <label>Tipo de Habitación</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <input type="text" id="precio" class="form-control" value="@Model.Precio.ToString("C")" asp-for="Precio" disabled />
+                        <label>Precio Por Día</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-floating mb-3 mb-md-0">
+                        <textarea class="form-control" asp-for="Descripcion" id="descripcionTextArea" disabled>@Model.Descripcion</textarea>
+                        <label>Descripcion</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="@Url.Content($"~/{Model.TipoHabitacion}.jpg")" class="hab" />
+        </div>
+    </div>
+    
+    <hr />
+
+    <h4>Datos del Cliente</h4>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                <select asp-for="tipoDocId" asp-items="ViewBag.tipoDoc" class="form-select">
+                    <option value="">Seleccionar</option>
+                </select>
+                <span asp-validation-for="tipoDocId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="text" id="Documento" class="form-control" asp-for="Documento" />
+                <label for="Documento">Documento</label>
+                <span asp-validation-for="Documento" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="text" class="form-control" asp-for="Telefono" />
+                <label for="Telefono">Teléfono</label>
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="text" class="form-control" asp-for="Nombre" />
+                <label for="Nombre">Nombre</label>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="text" class="form-control" asp-for="Apellido" />
+                <label for="Apellido">Apellido</label>
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 d-flex justify-content-center">
+        <button type="button" id="btnBuscarCliente" class="btn btn-primary w-100" disabled>Buscar Cliente</button>
+    </div>
+    <hr />
+    <h4>Datos del Alquiler</h4>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="number" id="dias" class="form-control" asp-for="dias" min="1" />
+                <label for="dias">Días</label>
+                <span asp-validation-for="dias" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="date" class="form-control" asp-for="FechaIngreso"
+                       value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" disabled/>
+                <label for="FechaIngreso">Fecha de Ingreso</label>
+                <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="date" class="form-control" asp-for="FechaSalida" disabled />
+                <label for="FechaSalida">Fecha de Salida</label>
+                <span asp-validation-for="FechaSalida" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="number" id="total" class="form-control" asp-for="total" disabled/>
+                <label for="total">Total</label>
+                <span asp-validation-for="total" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary">Registrar Alquiler</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var textarea = document.getElementById("descripcionTextArea");
+        textarea.style.height = "auto";
+        textarea.style.height = (textarea.scrollHeight+4) + "px";
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight+4) + "px";
+        });
+
+        const fechaIngresoInput = document.querySelector('[name="FechaIngreso"]');
+        const cantidadDiasInput = document.querySelector('[name="dias"]');
+        const precioPorDia = parseFloat("@Model.Precio");
+        const fechaSalidaInput = document.querySelector('[name="FechaSalida"]');
+        const totalInput = document.getElementById('total');
+        const documentoInput = document.getElementById("Documento");
+        const btnBuscarCliente = document.getElementById("btnBuscarCliente");
+
+        documentoInput.addEventListener("input", function () {
+            btnBuscarCliente.disabled = !documentoInput.value.trim();
+        });
+        btnBuscarCliente.addEventListener("click", function () {
+            const numeroDocumento = documentoInput.value.trim();
+
+            if (!numeroDocumento) return;
+            fetch(`/Habitacion/BuscarCliente?numeroDocumento=${encodeURIComponent(numeroDocumento)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            alert("Cliente no encontrado.");
+                        } else {
+                            alert("Error al buscar cliente.");
+                        }
+                        return null;
+                    }
+                    return response.json();
+                })
+                .then(cliente => {
+                    if (cliente) {
+                        document.querySelector('[name="Nombre"]').value = cliente.nombre;
+                        document.querySelector('[name="Apellido"]').value = cliente.apellido;
+                        document.querySelector('[name="Telefono"]').value = cliente.telefono;
+                        document.querySelector('[name="tipoDocId"]').value = cliente.tipoId;
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        });
+
+        function calcularFechaSalida() {
+            const fechaIngreso = new Date(fechaIngresoInput.value);
+            const cantidadDias = parseInt(cantidadDiasInput.value);
+
+            if (!isNaN(cantidadDias) && fechaIngreso instanceof Date && !isNaN(fechaIngreso)) {
+                fechaIngreso.setDate(fechaIngreso.getDate() + cantidadDias);
+                var fechaSalida = fechaIngreso.toISOString().split('T')[0];
+                fechaSalidaInput.value = fechaSalida;
+                var total = cantidadDias * precioPorDia;
+                totalInput.value = total.toFixed(2);
+            }
+        }
+
+        fechaIngresoInput.addEventListener("change", calcularFechaSalida);
+        cantidadDiasInput.addEventListener("input", calcularFechaSalida);
+    });
+</script>

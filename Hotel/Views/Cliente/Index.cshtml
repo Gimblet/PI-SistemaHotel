@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Hotel.ViewModels.ClienteFrontEnd>
+
+@{
+    ViewData["Title"] = "Lista de Clientes";
+    var tipoUsuario = Context.Session.GetString("tipoUsuario");
+}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listado de Clientes</h2>
+    </div>
+
+    <form asp-controller="Cliente" asp-action="Index" class="d-flex mb-4">
+        <input type="text" name="buscar" class="form-control me-2" placeholder="Buscar Número de Documento..." />
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><a asp-action="Index" asp-route-ordenar="@ViewData["NumDocSortParm"]" class="text-secondary text-decoration-none">Nombre</a></th>
+                <th><a asp-action="Index" asp-route-ordenar="@ViewData["NumDocSortParm"]" class="text-secondary text-decoration-none">Apellido</a></th>
+                <th><a asp-action="Index" asp-route-ordenar="@ViewData["NumDocSortParm"]" class="text-secondary text-decoration-none">Tipo Doc.</a></th>
+                <th><a asp-action="Index" asp-route-ordenar="@ViewData["NumDocSortParm"]" class="text-secondary text-decoration-none">N° Documento</a></th>
+                <th><a asp-action="Index" asp-route-ordenar="@ViewData["NumDocSortParm"]" class="text-secondary text-decoration-none">Teléfono</a></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.nombre</td>
+                    <td>@cliente.apellido</td>
+                    <td>@cliente.tipoDoc</td>
+                    <td>@cliente.numeroDoc</td>
+                    <td>@cliente.telefono</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@cliente.id" class="btn btn-warning">Modificar</a>
+                        @if(tipoUsuario=="ADMIN"){
+                            <a asp-action="Delete" asp-route-id="@cliente.id" class="btn btn-danger">Eliminar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

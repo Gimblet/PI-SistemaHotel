@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Hotel.ViewModels.AccesoFrontEnd>
+
+@{
+    ViewData["Title"] = "Lista de Empleados";
+    string tipo(string user){
+        if (user == "ADMIN")
+        {
+            return "Administrador";
+        }
+        else
+        {
+            return "Empleado";
+        }
+    }
+}
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listado de Empleados</h2>
+    </div>
+    <p>
+        <a asp-action="Create" asp-controller="Acceso" class="btn btn-primary">Registrar Nuevo Empleado</a>
+    </p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre y Apellido</th>
+                <th>Documento</th>
+                <th>Teléfono</th>
+                <th>Tipo de Empleado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr>
+                    <td>@usuario.nombre @usuario.apellido</td>
+                    <td>@usuario.tipoDoc: @usuario.numeroDoc</td>
+                    <td>@usuario.telefono</td>
+                    <td>@tipo(usuario.tipoUsuario)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@usuario.id" class="btn btn-warning">Modificar</a>
+                        <a asp-action="Delete" asp-route-id="@usuario.id" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,61 @@
+﻿@model Hotel.ViewModels.ClienteFrontEnd
+
+@{
+    ViewData["Title"] = "Modificar Cliente";
+}
+<div class="container my-4">
+    <h1 class="text-center text-warning mb-4">Modificar Cliente</h1>
+
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-warning text-white">
+            <h4 class="mb-0">Formulario de Edición</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input type="text" class="form-control" asp-for="nombre" />
+                            <label for="nombre">Nombre</label>
+                            <span asp-validation-for="nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input type="text" class="form-control" asp-for="apellido" />
+                            <label for="apellido">Apellido</label>
+                            <span asp-validation-for="apellido" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select asp-for="tipoId" asp-items="ViewBag.tipoDoc" class="form-select"></select>
+                            <span asp-validation-for="tipoId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input type="text" class="form-control" asp-for="numeroDoc" />
+                            <label for="numeroDoc">N° Documento</label>
+                            <span asp-validation-for="numeroDoc" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input type="text" class="form-control" asp-for="telefono" />
+                            <label for="telefono">Teléfono</label>
+                            <span asp-validation-for="telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="id" />
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
